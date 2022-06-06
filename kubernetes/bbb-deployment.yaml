@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bbb-deployment
+  namespace: bbb
+spec:
+  selector:
+    matchLabels:
+      app: bbb
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: bbb
+    spec:
+      containers:
+      - name: bbb
+        image: gcr.io/globo-351616/bbb-stress:0.0.6
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2"
+          limits:
+            memory: "6Gi"
+            cpu: "4"
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - secretRef:
+            name: credentials

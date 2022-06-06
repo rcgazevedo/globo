@@ -1,0 +1,9 @@
+db.sqlite3
+.vscode
+key.json
+env.vars
+env-secret*
+*secret*
+.terraform
+.terraform*
+*.tfstate*

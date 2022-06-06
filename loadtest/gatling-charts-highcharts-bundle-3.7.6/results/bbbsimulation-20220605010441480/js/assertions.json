@@ -1,0 +1,10 @@
+{
+  "simulation": "BBBSimulation",
+  "simulationId": "bbbsimulation",
+  "start": 1654391081480,
+  "description": "d",
+  "scenarios": ["RecordedSimulation"],
+  "assertions": [
+
+  ]
+}
