@@ -61,10 +61,10 @@ public class BBBSimulation extends Simulation {
             http("vote")
                 .post(uri2)
                 .formParam("csrfmiddlewaretoken", session -> session.getString("csrftoken"))
-                .formParam("choice", "1")
+                .formParam("choice", "2")
                 .formParam("passwg-recaptcha-response", ""));
 
     setUp(scn.injectOpen(
-        constantUsersPerSec(1).during(100))).protocols(httpProtocol);
+        constantUsersPerSec(2).during(10))).protocols(httpProtocol);
   }
 }

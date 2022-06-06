@@ -28,6 +28,16 @@ terraform apply --auto-approve
 gcloud container clusters get-credentials globo-devops-bbb-1 --region us-east1 --project globo-351616
 ```
 
+## Aplicando tunning
+
+Implementação:
+```
+gcloud container clusters get-credentials globo-devops-bbb-1 --region us-east1 --project globo-351616
+kubectl apply -f kubernetes-tunning/
+
+```
+
+
 ## Configurando PostgreSQL
 
 ### Primeira tentativa Terraform Cloud SQL (Descontinuado)
@@ -92,8 +102,8 @@ gcloud container clusters get-credentials globo-devops-bbb-1 --region us-east1 -
 
 Deploy da aplicação
 kubectl create ns bbb
-kubectl -n bbb create secret generic credentials --from-env-file ./kubernetes/env-secret.txt
-kubectl apply -f kubernetes/
+kubectl -n bbb create secret generic credentials --from-env-file ./kubernetes-app/env-secret.txt
+kubectl apply -f kubernetes-app/
 
 ```
 
@@ -137,10 +147,10 @@ helm upgrade --install promtail -f loki/promtail/values.yaml grafana/promtail
 
 ### Imagens do Log
 **Logging** 
-![Por Imagem logging](https://www.debian.org/Pics/openlogo-50.png)
+![Por Imagem logging](imagens/gcp-logs.PNG)
 
 **Loki**
-![Por Imagem logging](https://www.debian.org/Pics/openlogo-50.png)
+![Por Imagem logging](imagens/grafana-loki-logs-bbb.PNG)
 
 ## Teste de Carga
 
@@ -180,13 +190,13 @@ Report estático:
 - Caminho ./gatling-charts-highcharts-bundle-3.7.6/results
 
 **Report Estático** 
-![Por Imagem logging](https://www.debian.org/Pics/openlogo-50.png)
+![Por Imagem logging](imagens/gatling-report.PNG)
 
 Report em tempo real:
 - Teremos uma visão em tempo real do teste através de um board no Grafana.
 
 **Report em tempo real** 
-![Por Imagem logging](https://www.debian.org/Pics/openlogo-50.png)
+![Por Imagem logging](imagens/grafana-loadtest.PNG)
 
 ## Métricas
 
@@ -198,14 +208,12 @@ Decidi então focar nos testes do ambiente.
 ### Metrics GCP
 
 
-**Network** 
-![Por Imagem logging](https://www.debian.org/Pics/openlogo-50.png)
+**Basic Resources APP** 
+![Por Imagem logging](imagens/gcp-bbb-resources.PNG)
 
 **Kubernetes** 
-![Por Imagem logging](https://www.debian.org/Pics/openlogo-50.png)
+![Por Imagem logging](imagens/gcp-gke.PNG)
 
-**Container** 
-![Por Imagem logging](https://www.debian.org/Pics/openlogo-50.png)
+**Deployment** 
+![Por Imagem logging](imagens/gcp-bbb-deployment.PNG)
 
-**APP** 
-![Por Imagem logging](https://www.debian.org/Pics/openlogo-50.png)

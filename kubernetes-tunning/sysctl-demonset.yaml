@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: sysctl-adjuster
+  name: sysctl-adjuster
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: sysctl-adjuster
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: sysctl-adjuster
+      namespace: kube-system
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - |
+          while true; do
+            sysctl -p /etc/sysctl.d/99-kube-net.conf
+            sleep 30
+          done;
+        image: alpine:3.4
+        imagePullPolicy: IfNotPresent
+        name: adjuster
+        resources: {}
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/sysctl.d/99-kube-net.conf
+          name: 99-kube-net
+          subPath: 99-kube-net.conf
+      dnsPolicy: ClusterFirst
+      hostNetwork: true
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: 99-kube-net
+        name: 99-kube-net
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
